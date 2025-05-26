@@ -1,0 +1,49 @@
+@use '../color';
+@use '../breakpoints';
+
+#header {
+  background: color.$night;
+  //border: 2px solid color.$grey;
+  padding: 1rem;
+  header {
+    font-family: "kumbh sans";
+    display: flex;
+    flex: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    .center26logo {
+      margin: 0;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content:center;
+      .center26-text {
+        color: color.$grey;
+        font-size: 1rem;
+        //font-weight: 50;
+      }
+      //border: 3px solid color.$blueish-green;
+    }
+    .menu-icon { 
+      //border: 2px solid color.$blue-green;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: inherit;
+    }
+
+  }
+  @include breakpoints.desktop{
+    header {
+      .menu-icon {
+        border: 2px solid color.$blue-green;
+        display: none;
+      }
+
+    }
+
+  }
+
+}
+
+
