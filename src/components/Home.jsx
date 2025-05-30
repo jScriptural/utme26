@@ -1,23 +1,22 @@
 import {Link} from 'react-router-dom';
-import {useAuth} from '../context/Auth.jsx'
-
-
+import Alert from "./Alert.jsx"
+import HeaderHome from "./headers/HeaderHome.jsx";
 
 export default function Home(){
-  const auth = useAuth();
-
-
+  const msg = `Help keep this app free for aspirants like you, and schools. Donate here: Account number: 5348080115, Account name: John Isonguyo, Bank: Moniepoint. Thank you for your support.-  center26 Team`;
   return (<>
-    <section>
-      <h1>Home page</h1>
-      <p>This is our home page for now.</p>
-      {auth.currentUser?(<><h2>{auth.currentUser.displayName}</h2><h2>{auth.currentUser.email}</h2>
-      <button onClick={()=>auth.logout()}>logout here </button></>):(<><div>
-	<Link to="/signup"> signup here </Link>
-	</div>
-	<div>
-	  <Link to="/login">got account? login here</Link>
-	</div></>)}
+    <HeaderHome />
+    <section id="home">
+      <p><strong>Yes!! It's absolutely  FREE</strong><br/>	
+    By simulating UTME with actual past 
+    questions, <strong>centre26</strong> aim to build aspirant's confidence and familiarity with the exam format.<br/>
+    <strong>centre26</strong> provide a free platform for aspirants to test the level of their readiness for the main exam.<br/> While we are facing some challenges like  sourcing for past questions and  maintaining the app, your support  can help offset the cost and keep this app free.
+    </p>
+      <Alert title="Support Us" message={msg} />
+      <ul  className="links">
+	<li><Link to="/auth/signup">Create an account</Link></li>
+	<li>Got an account?<Link to="/auth/login"> Login</Link></li>
+      </ul>
     </section>
     </>);
 }

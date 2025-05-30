@@ -1,4 +1,5 @@
 import center26Logo from '/center26logo.svg';
+import centre26Logo from '/centre26logo.svg';
 
 
 export default function Header(){
@@ -6,11 +7,15 @@ export default function Header(){
     <section id="header">
       <header>
 	<figure className="center26logo">
-          <svg width="115" height="45" xmlns="http://www.w3.org/2000/svg" >
+	  <svg width="115" height="65" xmlns="http://www.w3.org/2000/svg">
+	    <rect x="35" y="0" width="45" height="45" fill="#008d34"/>
+	    <line x1="52.5" y1="22.5" x2="62.5" y2="22.5" stroke="#dcdcdc" strokeWidth="10"/>
+	    <text x="57.5" y="55" font-size="12" text-anchor="middle" fill="#000000">centre26</text>		</svg>
+    {/*<svg width="115" height="45" xmlns="http://www.w3.org/2000/svg" >
 	    <rect x="0" y="0" width="45" height="45" fill="#008d34"/>
 	    <line x1="17.5" y1="22.5" x2="27.5" y2="22.5" stroke="#dcdcdc" strokeWidth="10"/>
 	  </svg>
-	  <figcaption className="center26-text">center26</figcaption>
+	  <figcaption className="center26-text">center26</figcaption>*/}
 	</figure>
         <button aria-label="Open menu" className="menu-icon">
 	  <svg viewBox="0 0 24 24" width="50" height="40">

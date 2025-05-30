@@ -2,78 +2,101 @@ import {useState, useEffect, useRef} from 'react';
 import {validatePassword,getAuth} from 'firebase/auth';
 import {Link, useNavigate} from 'react-router-dom';
 import {useAuth} from '../../context/Auth.jsx';
+import HeaderAuth from  "../headers/HeaderAuth.jsx";
+
+function validateEmail(email){
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
 
 
 export default function Signup(){
-  const [errorMsg, setErrorMsg] = useState('');
+  const [error, setError] = useState();
   const [showPasswd, setShowPasswd] = useState(false);
-  const  auth  = useAuth();
+  const [displayName, setDisplayName] = useState();
+
   const formRef = useRef();
   const navigate = useNavigate();
 
+  const  {
+    signUp,
+    canUpdate,
+    currentUser,
+    verifyEmail,
+    setProfile,
+    logOut } = useAuth();
+
   const handleSubmit = async (evt)=>{
+    //prevent page refresh on submit
     evt.preventDefault();
+
     const form = formRef.current;
     const password = form.passwordInput.value;
     const email = form.emailInput.value;
-    const displayName = email.split("@")[0];
+    setDisplayName(form.userNameInput.value);
 
+    if(!validateEmail(email))
+      return setError("Please provide a valid email");
 
-    const status = await validatePassword(getAuth(), password);
-
-    if(!status.isValid){
-      console.log(status);
-      setErrorMsg("Weak password");
-      return;
+    try {
+      const status = await validatePassword(getAuth(), password);
+      console.log("status");
+      const userCredential = await signUp(email,password);
+    } catch(error){
+      setError(error.message);
     }
-
-
-    //console.log("status: ",status);
-    console.log("signup passwd: ",password);
-    //console.log("email: ",email);
-    await auth.signup(email,password,displayName);
-
-    if(auth.errCode)
-      setErrorMsg(auth.errMsg);
-
   }
 
+  console.log(displayName);
   useEffect(()=>{
     (async ()=>{
-      if(!auth.loading){
-	console.log("signup loading: ", auth.loading);
-	console.log("signup currUser: ",auth.currentUser);
-	await auth.logout();
-	navigate("/login");
+      if(canUpdate){
+      //if currentUser is defined,
+	//set display name.
+	try {
+	  await setProfile({displayName});
+	}catch(error){
+	  setError(error.message);
+	}
+	//Redirect to login.
+	await logOut();
+	navigate("/auth/login");
       }
     })();
-  },[auth.loading])
+  },[canUpdate])
 
   return (<>
-    <h1>{auth.loading?"true":"false"}</h1>
+    <HeaderAuth />
     <section id="signup">
       <div className="container" >
-      <div className="errormsg">{errorMsg}</div>
+      <div className="error">{error}</div>
 	<form onSubmit={handleSubmit} ref={formRef}>
 	  <fieldset>
-	    <legend>SIGNUP</legend>
+	    <legend>Create account</legend>
+	    <div className="con-username">
+	      <label htmlFor="userNameInput" hidden>First Name</label>
+	      <input type="text" id="userNameInput" name="userName" placeholder="First Name" required />
+	    </div>
 	    <div className="con-email">
-	      <label htmlFor="emailInput">Email</label>
-	      <input type="email" id="emailInput" name="emailInput" placeholder="example@email.com"/>
+	      <label htmlFor="emailInput" hidden>Email</label>
+	      <input type="email" id="emailInput" name="emailInput" placeholder="Email" required />
 	    </div>
 	    <div className="con-password">
-	      <label htmlFor="passwordInput"> Password </label>
-	      <input type={showPasswd?"text":"password"} id="passwordInput" name="password"/>
+	      <label htmlFor="passwordInput" hidden> Password </label>
+	      <input type={showPasswd?"text":"password"} id="passwordInput" name="password" placeholder="Password" required/>
 	    </div>
 	    <div className="con-button">
-	      <button type="submit" className="btn signup-btn"> Signup </button>
+	      <button type="submit" className="btn signup-btn"> Create account </button>
 	    </div>
 	  </fieldset>
 	</form>
-	<form id="showPasswd">
+	<form className="showPasswd">
 	  <input type="checkbox" id="checkboxInput" name="showPassword" onChange={(evt)=>setShowPasswd(evt.target.checked)}/>
 	  <label htmlFor="checkBoxInput">Show password</label>
 	</form>
+	<div className="link">
+	 <span>Already have an account?</span> <Link to="/auth/login"> Login </Link>
+	</div>
       </div>
     </section>
   </>)

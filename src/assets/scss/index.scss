@@ -1,6 +1,13 @@
-@use 'color';
-@use 'breakpoints';
-@use 'base';
+@use "color";
+@use "breakpoints";
+@use "base";
 
-@use 'components/header';
+@use "components/header";
+@use "components/alert";
+@use "components/headerhome";
+@use "components/home";
+@use "components/headerauth";
+@use "components/signup";
+@use "components/login";
+@use "components/resetpassword";
 

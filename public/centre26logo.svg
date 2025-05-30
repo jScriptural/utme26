@@ -1,0 +1,5 @@
+<svg width="115" height="65" xmlns="http://www.w3.org/2000/svg">
+    <rect x="35" y="0" width="45" height="45" fill="#008d34"/>
+    <line x1="52.5" y1="22.5" x2="62.5" y2="22.5" stroke="#dcdcdc" strokeWidth="10"/>
+    <text x="57.5" y="55" font-size="12" text-anchor="middle" fill="#000000">centre26</text>
+</svg>

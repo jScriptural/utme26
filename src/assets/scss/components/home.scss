@@ -1,0 +1,16 @@
+@use "../color";
+
+#home {
+  position: relative;
+  padding: 1rem;
+  color: color.$night;
+  p {
+    margin-bottom: 2rem;
+  }
+ // border: 1px solid color.$yellow;
+ // margin-top: 1rem;
+
+ .links {
+   margin-top: 2rem;
+ }
+}
