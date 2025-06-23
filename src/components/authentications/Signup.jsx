@@ -1,3 +1,4 @@
+"use strict"
 import {useState, useEffect, useRef} from 'react';
 import {validatePassword,getAuth} from 'firebase/auth';
 import {Link, useNavigate} from 'react-router-dom';
@@ -9,9 +10,15 @@ function validateEmail(email){
   return emailRegex.test(email);
 }
 
+function validateDisplayName(userName){
+  const regex = /^[a-zA-Z0-9]+$/;
+  return regex.test(userName);
+}
+
 
 export default function Signup(){
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
   const [showPasswd, setShowPasswd] = useState(false);
   const [displayName, setDisplayName] = useState();
 
@@ -29,25 +36,46 @@ export default function Signup(){
   const handleSubmit = async (evt)=>{
     //prevent page refresh on submit
     evt.preventDefault();
+    setLoading(true);
 
     const form = formRef.current;
     const password = form.passwordInput.value;
     const email = form.emailInput.value;
-    setDisplayName(form.userNameInput.value);
+    const displayName = form.userNameInput.value;
 
-    if(!validateEmail(email))
-      return setError("Please provide a valid email");
 
     try {
-      const status = await validatePassword(getAuth(), password);
-      console.log("status");
+      if(!validateDisplayName(displayName))
+	throw new Error(`Name can contain only alphanumeric characters`);
+
+      setDisplayName(displayName)
+
+      if(!validateEmail(email))
+	throw new Error("Please provide a valid email");
+
+      const stat = await validatePassword(getAuth(), password);
+      if(!stat.isvalid){
+	if(!stat.containsLowercaseLetter)
+	  throw new Error(`Password must contain a  lowercase letter`);
+	else if(!stat.containsNumericCharacter)
+	  throw new Error(`Password must contain numeric character`);
+	else if(!stat.containsNonAlphanumericCharacter)
+	  throw new Error(`Password must contain a non-alphanumeric character such as "^$*.[]{}()?\\"!@#%&/,><':;|_~\`-"`);
+	else if(!stat.containsUppercaseLetter)
+	  throw new Error(`Password must contain an uppercase letter`);
+	else if(!stat.meetsMaxPasswordLength)
+	  throw new Error(`Password length must be less than 4096`);
+	else if(!stat.meetsMinPasswordLength)
+	  throw new Error(`Password must be at least 8 characters long`);
+
+      }
       const userCredential = await signUp(email,password);
     } catch(error){
+      setLoading(false);
       setError(error.message);
     }
   }
 
-  console.log(displayName);
   useEffect(()=>{
     (async ()=>{
       if(canUpdate){
@@ -60,6 +88,7 @@ export default function Signup(){
 	}
 	//Redirect to login.
 	await logOut();
+	setLoading(false);
 	navigate("/auth/login");
       }
     })();
@@ -86,7 +115,7 @@ export default function Signup(){
 	      <input type={showPasswd?"text":"password"} id="passwordInput" name="password" placeholder="Password" required/>
 	    </div>
 	    <div className="con-button">
-	      <button type="submit" className="btn signup-btn"> Create account </button>
+	      <button type="submit" className="btn signup-btn">{loading?<i className="fa fa-spinner fa-spin"></i>:"Create account"}</button>
 	    </div>
 	  </fieldset>
 	</form>

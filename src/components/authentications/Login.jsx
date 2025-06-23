@@ -10,8 +10,9 @@ import {
 
 export default function Login(){
   const [error, setError] = useState();
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [showPasswd, setShowPasswd] = useState(false);
+  const navigate = useNavigate();
   const formRef = useRef();
 
   const  {
@@ -21,17 +22,17 @@ export default function Login(){
 
   const handleSubmit = async (evt)=>{
     evt.preventDefault();
+    setLoading(true);
     const form = formRef.current;
     const password = form.passwordInput.value;
     const email = form.emailInput.value;
 
-    console.log("login paddword: ", password);
-    console.log("login email: ", email);
     try {
 
      await logIn(email,password);
 
     } catch(error) {
+      setLoading(false);
       setError(error.message);
     }
   }
@@ -39,6 +40,7 @@ export default function Login(){
   useEffect(()=>{
     (async ()=>{
       if(currentUser){
+	setLoading(false);
 	navigate("/main");
       }
     })();
@@ -52,17 +54,17 @@ export default function Login(){
       <div className="error">{error}</div>
 	<form onSubmit={handleSubmit} ref={formRef}>
 	  <fieldset>
-	    <legend>Log in</legend>
+	    <legend>Login</legend>
 	    <div className="con-email">
 	      <label htmlFor="emailInput" hidden>Email</label>
-	      <input type="email" id="emailInput" name="emailInput" placeholder="Email" required/>
+	      <input type="email" id="emailInput" name="emailInput" placeholder="Email"autofocus autocomplete="email"  required/>
 	    </div>
 	    <div className="con-password">
 	      <label htmlFor="passwordInput" hidden> Password </label>
 	      <input type={showPasswd?"text":"password"}  id="passwordInput" name="password" placeholder="Password" required/>
 	    </div>
 	    <div className="con-button">
-	      <button type="submit" className="btn login-btn"> Log in</button>
+	      <button type="submit" className="btn login-btn">{loading?<i className="fa fa-spinner fa-spin"></i>: "Login"} </button>
 	    </div>
 	  </fieldset>
 	</form>

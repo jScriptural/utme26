@@ -6,11 +6,13 @@ import HeaderAuth from  "../headers/HeaderAuth.jsx";
 
 export default function ResetPassword(){
   const [msg, setMsg] = useState();
+  const [loading, setLoading] = useState(false);
   const {sendResetEmail} = useAuth(); 
   const formRef = useRef();
 
   async function handleSubmit(evt){
     evt.preventDefault();
+    setLoading(true);
     const email = formRef.current.emailInput.value;
     console.log(email);
     try {
@@ -19,6 +21,8 @@ export default function ResetPassword(){
     }catch(error){
       setMsg(error.message);
     }
+
+    setLoading(false);
   }
 
   return (<>
@@ -34,7 +38,7 @@ export default function ResetPassword(){
 		<input type="email" id="emailInput" name="emailInput" placeholder="Email" required/>
 	      </div>
 	      <div className="con-button">
-		<button type="submit" className="btn submit-btn">Send email reset link</button>
+		<button type="submit" className="btn submit-btn">{loading?<i className="fa fa-spinner fa-spin"></i>:"Send email reset link"}</button>
 	      </div>
 	  </fieldset>
 	</form>

@@ -1,0 +1,39 @@
+@use "../color";
+
+
+#profile {
+  position: fixed;
+  top: 30vh;
+  padding: 1rem;
+  border: 1px solid color.$grey;
+  border-radius: 1rem;
+  background: transparent;
+  backdrop-filter: blur(10px);
+  .container {
+    padding: 1rem;
+    .user-icon {
+      filter:drop-shadow(0 5px color.$darkest-grey);
+      padding: 0;
+      margin: 1rem 0;
+      .fa-user {
+        font-size: 4rem;
+      }
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      li {
+        color: color.$night;
+        font-weight: 500;
+        span {
+          color: color.$gold-dark;
+        }
+      }
+    }
+    .logout {
+      filter:drop-shadow(2px 4px color.$darkest-grey);
+      margin-top: 1rem;
+    }
+  }
+}

@@ -3,6 +3,7 @@
 @use "base";
 
 @use "components/header";
+@use "components/loading";
 @use "components/alert";
 @use "components/headerhome";
 @use "components/home";
@@ -10,4 +11,7 @@
 @use "components/signup";
 @use "components/login";
 @use "components/resetpassword";
+@use "components/main";
+@use "components/profile";
+@use "components/headermain";
 

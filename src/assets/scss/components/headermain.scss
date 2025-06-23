@@ -1,0 +1,38 @@
+@use "../color";
+
+#navMain {
+
+  background-color: color.$darkest-grey;
+  padding: 2.5rem 0 5rem 0;
+  margin-bottom:1rem;
+  border-bottom: .5rem solid color.$green-shade1;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  filter:drop-shadow(.5rem 0.7rem color.$gold-dark); 
+  .logo {
+    //border: 1px solid red;
+    margin:0;
+  }
+
+  .user-icon {
+    height: 3rem;
+    width: 3rem;
+    background-color: color.$gold-dark;
+    border: 1px solid color.$night;
+    padding: .7rem;
+    text-align: center;
+    margin:0 1rem 0 auto;
+    border-radius: 50%;
+    .fa-user {
+      font-size: 1.5rem;
+      color: color.$night;
+    }
+
+    &:active {
+      border: 2px solid color.$night;
+    }
+  }
+
+
+}

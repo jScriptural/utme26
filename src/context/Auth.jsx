@@ -1,4 +1,5 @@
 import auth from '../firebase/firebase.auth.js'
+import Loading from "../components/Loading.jsx";
 import {
   useState, 
   useEffect, 
@@ -63,10 +64,8 @@ function AuthProvider({children}) {
       setLoading(false);
       if(user){
 	setCanUpdate(true);
-	console.log("user defined on auth state changed");
       } else {
 	setCanUpdate(false);
-	console.log("user undefined on auth state changed");
       }
     });
       return unsubscribe;
@@ -87,7 +86,7 @@ function AuthProvider({children}) {
   return (<>
 
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {loading?<Loading /> : children}
     </AuthContext.Provider>
 
     </>)

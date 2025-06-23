@@ -1,0 +1,24 @@
+@use "../color";
+
+
+#loading {
+  //border: 1px solid red;
+  width: 100vw;
+  height: 100vh;
+ // background: radial-gradient(color.$gold-dark, color.$night);
+  display: flex;
+  align-items: center;
+  background: radial-gradient(circle, color.$gold-dark 1px, transparent 1px), linear-gradient(to right, color.$darkest-grey, color.$darkest-grey);
+  background-size: 10px 10px, cover;
+
+   //background: color.$darkest-grey;
+  //padding: 8px;
+  .text {
+    font-size: 1.5rem;
+    color: color.$white;
+    span {
+      color: color.$grey;
+    }
+  }
+
+}

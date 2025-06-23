@@ -6,7 +6,7 @@ export default function HeaderAuth(props){
 
   return (
     <nav id="navAuth">
-     <Centre26Logo className="logo" fill="#c2950a" />
+     <Centre26Logo className="logo" />
     </nav>
   )
 }

@@ -1,12 +1,11 @@
 @use '../color';
 
 #alert {
-  //border: 1px dotted red;
   padding: 0 1rem;
   .container {
-    filter: drop-shadow(-.4rem .8rem color.$gold-dark);
+    filter: drop-shadow(-.4rem .8rem  color.$gold-dark);
 
-    background: color.$darkest-grey;
+    background-color: color.$darkest-grey;
     border: 1.5px solid color.$green-shade1;
     padding: 0 1rem;
     transform: skewX(-4deg) translate(2px);
