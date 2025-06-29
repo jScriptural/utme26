@@ -1,10 +1,12 @@
+import {getDocs, collection} from "firebase/firestore";
+import db from "../firebase/firebase.store.js";
 import {
   useState,
   createContext,
   useContext } from "react";
 
-const SubscriptionContext = createContext();
 
+const SubscriptionContext = createContext();
 function useSubscription(){
   return useContext(SubscriptionContext);
 }
@@ -39,10 +41,21 @@ const subjects = [
 
 function SubscriptionProvider({children}){
   const [selections, setSelections] = useState([]);
+  const [questions,setQuestions] = useState([]);
+
+  async function getRandomQ(subject,limit=5){
+    const qs = await getDocs(collection(db,`subjects/${subject}/questions`));
+    const q = [];
+    qs.forEach(doc=>q.push(doc.data()));
+    return q.sort(()=>Math.random()-0.5).slice(0,limit);
+  }
 
   const value = {
     selections,
     setSelections,
+    getRandomQ,
+    setQuestions,
+    questions
   };
 
   return (

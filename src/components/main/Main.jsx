@@ -19,13 +19,15 @@ export default function Main(){
   const navigate = useNavigate();
   const [mode,setMode] = useState(null);
   const {currentUser, logOut} = useAuth();
-  const {selections, setSelections} = useSubscription();
+  const {
+    selections,
+    setSelections,
+    getRandomQ,
+    setQuestions } = useSubscription();
 
-
-  const handleSubmit = evt => {
+  function handleSubmit(evt){
     evt.preventDefault();
     const form = document.forms[modes[mode]];
-
     const sub = form.querySelectorAll("input:checked");
     setSelections(Array.from(sub).map((e,i)=>e.value));
 
@@ -48,8 +50,18 @@ export default function Main(){
 
   useEffect(()=>{
     console.log(selections);
-    if((canStart && mode == 0 && selections.length == 4) || (canStart && mode == 1 && selections.length == 1))
+    if((canStart && mode == 0 && selections.length == 4) || (canStart && mode == 1 && selections.length == 1)){
+      setQuestions([]);
+      selections.forEach(async function (sub){
+	const s = sub.split(" ")
+	  .filter(p=> p !== ' ')
+	  .join("_")
+	  .toLowerCase();
+	const q = await getRandomQ(s);
+	setQuestions(p=>[...p,...q]);
+      })
       navigate("/main/exam");
+    }
 
   },[selections]);
 
@@ -73,7 +85,7 @@ export default function Main(){
 	    <input type="radio" name="mode" id="examMode" value="exam-mode" onChange={evt=>setMode(0)}/>
 	  Exam mode </label>
 	  <label htmlFor="practiceMode"> 
-	    <input type type="radio" name="mode" id="practiceMode" value="practice-mode" onChange={evt=>setMode(1)}/>
+	    <input type="radio" name="mode" id="practiceMode" value="practice-mode" onChange={evt=>setMode(1)}/>
 	  Practice mode </label>
 	</fieldset>
       </form>
