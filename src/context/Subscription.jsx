@@ -41,6 +41,7 @@ const subjects = [
 
 function SubscriptionProvider({children}){
   const [selections, setSelections] = useState([]);
+  const [mode, setMode] = useState(null);
   const [questions,setQuestions] = useState([]);
 
   async function getRandomQ(subject,limit=5){
@@ -55,7 +56,9 @@ function SubscriptionProvider({children}){
     setSelections,
     getRandomQ,
     setQuestions,
-    questions
+    questions,
+    setMode,
+    mode
   };
 
   return (

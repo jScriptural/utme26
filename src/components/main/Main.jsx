@@ -17,14 +17,14 @@ export default function Main(){
   const [showProfile, setShowProfile] = useState(false);
   const [canStart,setCanStart] = useState(false);
   const navigate = useNavigate();
-  const [mode,setMode] = useState(null);
   const {currentUser, logOut} = useAuth();
   const {
+    mode,
+    setMode,
     selections,
     setSelections,
     getRandomQ,
     setQuestions } = useSubscription();
-
   function handleSubmit(evt){
     evt.preventDefault();
     const form = document.forms[modes[mode]];
@@ -49,7 +49,6 @@ export default function Main(){
 
 
   useEffect(()=>{
-    console.log(selections);
     if((canStart && mode == 0 && selections.length == 4) || (canStart && mode == 1 && selections.length == 1)){
       setQuestions([]);
       selections.forEach(async function (sub){

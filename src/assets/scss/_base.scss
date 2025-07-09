@@ -24,9 +24,10 @@ body {
 }
 #root {
   margin: 0;
-  overflow: hidden;
+  //overflow: scroll;
   padding: 0;
   position: relative;
+  width: 100vw;
 }
 
 a {

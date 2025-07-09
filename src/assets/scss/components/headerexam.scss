@@ -1,0 +1,43 @@
+@use "../color";
+
+#navExam {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  z-index: 2000;
+  background-color: color.$darkest-grey;
+  padding: .5rem 0 .5rem 0;
+  //margin-bottom:1rem;
+  border-bottom: .4rem solid color.$green-shade1;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  filter:drop-shadow(.2rem .4rem color.$gold-dark); 
+  .logo {
+    //border: 1px solid red;
+    margin:0;
+  }
+
+  .menu-icon {
+    background: none;
+    border: none;
+    //height: 3rem;
+    //width: 3rem;
+    //background-color: color.$gold-dark;
+    //border: 1px solid color.$night;
+    //padding: .7rem;
+    text-align: center;
+    margin:0 1rem 0 auto;
+    //border-radius: 50%;
+    /*.fa-user {
+      font-size: 1.5rem;
+      color: color.$night;
+    }*/ 
+
+    &:active {
+      border: 2px hidden color.$darker-grey;
+    }
+  }
+
+
+}
