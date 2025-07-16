@@ -57,14 +57,14 @@ export default function Login(){
 	    <legend>Login</legend>
 	    <div className="con-email">
 	      <label htmlFor="emailInput" hidden>Email</label>
-	      <input type="email" id="emailInput" name="emailInput" placeholder="Email"autofocus autocomplete="email"  required/>
+	      <input type="email" id="emailInput" name="emailInput" placeholder="Email" autoFocus autoComplete="email"  required/>
 	    </div>
 	    <div className="con-password">
 	      <label htmlFor="passwordInput" hidden> Password </label>
 	      <input type={showPasswd?"text":"password"}  id="passwordInput" name="password" placeholder="Password" required/>
 	    </div>
 	    <div className="con-button">
-	      <button type="submit" className="btn login-btn">{loading?<i className="fa fa-spinner fa-spin"></i>: "Login"} </button>
+	      <button type="submit" className="btn login-btn" disabled={loading}>{loading?<i className="fa fa-spinner fa-spin"></i>: "Login"} </button>
 	    </div>
 	  </fieldset>
 	</form>

@@ -9,6 +9,7 @@
     list-style: none;
     padding: 0;
     li {
+      //font-family: ;
       font-weight: bold;
       text-decoration: underline;
       cursor: pointer;
@@ -30,6 +31,7 @@
       align-items: center;
       justify-content: center;
       .btn {
+        font-size: 1.1rem;
         padding: 1rem 2rem;
         text-align: center;
         background: color.$green-shade2;
@@ -49,6 +51,7 @@
       padding: 1rem 2rem;
       border-radius: .5rem;
       border: none;
+      font-size: 1.1rem;
     }
     .prev {
       background: color.$grey;
@@ -65,14 +68,14 @@
     top: 0;
     left: 0;
     z-index: 200000;
-    backdrop-filter: blur(5px);
+    backdrop-filter:blur(10px);
     width: 100%;
     height: 100%;
     .cancel {
       font-size: 3rem;
       color: color.$error;
-      margin: 5px;
-      padding: 0 2rem;
+      margin: 4px;
+      padding: 0 1rem;
     }
     .menu {
       list-style: none;
@@ -91,12 +94,25 @@
         text-align: center;
         background: color.$green-shade2;
         font-weight: bold;
+        
+      }
+      .picked {
+        background: color.$gold-dark;
       }
     }
-
   }
-
+  
   .active {
     color: color.$gold-dark;
   }
+  
 }
+
+
+
+
+.hr {
+  height: 2.5px;
+  background: linear-gradient(120deg,#C2950A 0%,#8ABF3F 10%,#2CA257 100%);
+    border: none;
+  }

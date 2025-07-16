@@ -16,6 +16,7 @@ const modes = [
 export default function Main(){
   const [showProfile, setShowProfile] = useState(false);
   const [canStart,setCanStart] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const {currentUser, logOut} = useAuth();
   const {
@@ -24,7 +25,9 @@ export default function Main(){
     selections,
     setSelections,
     getRandomQ,
-    setQuestions } = useSubscription();
+    setQuestions,
+    questions} = useSubscription();
+
   function handleSubmit(evt){
     evt.preventDefault();
     const form = document.forms[modes[mode]];
@@ -49,20 +52,33 @@ export default function Main(){
 
 
   useEffect(()=>{
-    if((canStart && mode == 0 && selections.length == 4) || (canStart && mode == 1 && selections.length == 1)){
-      setQuestions([]);
-      selections.forEach(async function (sub){
+    setSelections([]);
+    setMode(null);
+    setQuestions([]);
+  },[])
+
+  useEffect(()=>{
+    const len = selections.length;
+    if((canStart && mode == 0 && len  == 4) || (canStart && mode == 1 && len == 1)){
+      setIsLoading(true);
+      selections.forEach(async (sub,i)=>{
 	const s = sub.split(" ")
 	  .filter(p=> p !== ' ')
 	  .join("_")
 	  .toLowerCase();
 	const q = await getRandomQ(s);
 	setQuestions(p=>[...p,...q]);
+	if(i === len-1)
+	  setIsLoading(false);
       })
-      navigate("/main/exam");
     }
 
   },[selections]);
+
+  useEffect(()=>{
+    if(!isLoading && questions.length)
+      navigate("/main/exam");
+  },[isLoading])
 
   return (<>
     <HeaderMain setShowProfile={setShowProfile}/>
@@ -112,7 +128,7 @@ export default function Main(){
 	</form>)
       }
       {(mode != null) && (<div className="btn-con">
-	<button type="submit" onClick={handleSubmit}> Start exam </button>
+	<button type="submit" onClick={handleSubmit} disabled={isLoading}>{isLoading?<i className="fa fa-spinner fa-spin"></i>:"Start exam"} </button>
       </div>)
       }
     </section>

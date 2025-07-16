@@ -16,7 +16,7 @@ export default function Card({data,index,showIndex}){
 	  <ul className="options">
 	    {data.options.map((opt,i)=>(
 	      <li key={i} className="option">
-		<input type="radio" name={"opt"+index} id={"opt"+i+"q"+index} />
+		<input type="radio" name={"opt"+index} data-qindex={index} id={"opt"+i+"q"+index} value={opt}/>
 		<label htmlFor={"opt"+i+"q"+index}>{opt}</label>
 	      </li>
 	    ))}

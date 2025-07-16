@@ -115,7 +115,7 @@ export default function Signup(){
 	      <input type={showPasswd?"text":"password"} id="passwordInput" name="password" placeholder="Password" required/>
 	    </div>
 	    <div className="con-button">
-	      <button type="submit" className="btn signup-btn">{loading?<i className="fa fa-spinner fa-spin"></i>:"Create account"}</button>
+	      <button type="submit" className="btn signup-btn" disabled={loading}>{loading?<i className="fa fa-spinner fa-spin"></i>:"Create account"}</button>
 	    </div>
 	  </fieldset>
 	</form>
