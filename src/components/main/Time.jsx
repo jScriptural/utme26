@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 
 
 export default function Time({submitBtn}){
-  const [secs, setSecs] = useState(800);
+  const [secs, setSecs] = useState(120);
 
 
   useEffect(()=>{

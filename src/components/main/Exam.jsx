@@ -5,18 +5,19 @@ import {useSubscription} from "../../context/Subscription.jsx";
 import {Link,Navigate,useNavigate} from "react-router";
 import Time from "./Time.jsx";
 import Card from "./Card.jsx";
-
+import ResultSlip from "./ResultSlip.jsx"
 
 
 export default function Exam(){
   const submitBtnRef = useRef();
   const navigate = useNavigate();
   const {currentUser,logOut} = useAuth();
-  const [secs, setSecs] = useState(59);
+  const [scores,setScores] = useState({});
+  const [showResultSlip, setShowResultSlip] = useState(false);
+  const [isloading,setIsLoading] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [picked, setPicked] = useState([]);
   const [currQuest, setCurrQuest] = useState(0);
-  const [mins, setMins] = useState(4);
   const {
     selections,
     questions,
@@ -24,24 +25,35 @@ export default function Exam(){
     mode } = useSubscription();
 
   const handleSubmit = evt =>{
-    let aggregate = 0;
     evt.preventDefault();
-   // const inputs = document.querySelectorAll("input");
-    //console.log("checked",inputs);
-    //navigate("/main");
+    const nq = questions.length;
+    const ns = selections.length;
+    const qpers = nq/ns;
+    const mperq = 400/nq;
+
+    const aggregate = Object.fromEntries(selections.map(key=>[key,0]));
 
     questions.forEach((q,i)=>{
       const opt = document.querySelector(`[name=opt${i}]:checked`);
-      //console.log(`${"opt"+i}s`,opt);
       if(opt && (String(q.options[q.answer]) === opt.value)){
-	++aggregate;
-	console.log(String(q.options[q.answer]));
-	console.log(opt.value);
+	if(i < qpers)
+	  ++aggregate[selections[0]];
+	else if(i >= qpers && i < 2*qpers)
+	  ++aggregate[selections[1]];
+	else if(i >= 2*qpers && i < 3*qpers)
+	  ++aggregate[selections[2]];
+	else if(i >= 3*qpers)
+	  ++aggregate[selections[3]];
+
       }
     })
 
-    alert(`score: ${aggregate}`);
-    console.log(aggregate);
+    for(let key of Object.keys(aggregate))
+      aggregate[key] *= mperq;
+
+
+    setScores(aggregate);
+    setShowResultSlip(true);
   }
 
   const handleNext = evt => {
@@ -119,6 +131,10 @@ export default function Exam(){
 	    ))}
 	  </ul>
 	</div>)}
+
+	{showResultSlip && (
+	  <ResultSlip setShowResultSlip={setShowResultSlip} scores={scores} />
+	)}
 
       </section>) : <Navigate to="/main" replace />
     }
