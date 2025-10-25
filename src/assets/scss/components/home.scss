@@ -3,9 +3,75 @@
 #home {
   position: relative;
   padding: 1.5rem;
-  color: color.$night;
-  p {
-    margin-bottom: 2rem;
+  color: color.$night;  
+  .intro-container {
+       // border: 1px solid red;
+    .intro {
+        //border: 1px solid #007de2;
+      img {
+        width: 55%;
+        float: right;
+      }
+      figcaption {
+
+      }
+    }
+  }
+  .why-us {
+     // border: 1px solid $blue-deep;
+    h2 {
+      //border: 1px solid red;
+      text-align:center;
+      color: color.$blue-deep;
+    }
+    .reason-1 {
+      img {
+        float: left;
+        width: 55%;
+      }
+    }
+    .reason-2 {
+      img {
+        float: right;
+        width: 55%;
+      }
+    }
+  }
+
+  .outro {
+    margin: 5rem 0;
+    figure {
+      img {
+        width: 55%;
+      }
+      figcaption {
+        font-weight: bold;
+      }
+    }
+    .btn-container {
+      //border: 1px solid red;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      a {
+        //border: 1px solid green;
+        width: 100%;
+        text-align: center;
+        button {
+          border:none;
+          outline: none;
+          color: color.$blue-light;
+          font-size: 1.2rem;
+          font-weight: bold;
+          font-family: "kumbh sans";
+          width: 85%;
+          padding: 1rem;
+          border-radius: .5rem;
+          text-align: center;
+          background-color: color.$blue-deep;
+        }
+      }
+    }
   }
 
  .links {

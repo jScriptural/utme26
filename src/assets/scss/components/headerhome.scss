@@ -1,17 +1,23 @@
 @use "../color";
 
 #navHome {
-   background-color: color.$darkest-grey;
-  //background: repeating-radial-gradient(color.$grey 0px , color.$night 10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  //background-color: color.$blue-light;//color.$darkest-grey;
+  //background: repeating-radial-gradient(color.$blue-deep 0px , color.$blue-light 10px);
+  //background: transparent;
+  backdrop-filter: blur(1rem);
   padding: 1rem 0;
-  //border: 1px solid blue;
+ // border: 1px solid blue;
   margin-bottom:1rem;
-  border-bottom: .5rem solid color.$green-shade1;
+  //border-bottom: .5rem solid color.$blue-deep; //color.$green-shade1;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: start;
-  filter:drop-shadow(.5rem 0.7rem color.$gold-dark);
+  //filter:drop-shadow(.5rem 0.7rem color.$gold-dark);
+  //filter:drop-shadow(.5rem 0.7rem color.~grey);
   .navlinks {
     width: 100%;
     list-style: none;
